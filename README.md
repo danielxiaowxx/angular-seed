@@ -4,6 +4,8 @@
 npm install && bower install && gulp pre-dev
 ```
 
+实际应用的项目可参考bvo_front_end: http://gitlab.globalmarket.com/snowball/bvo_front_end
+
 ## 开始开发
 
 gulp develop (如果用80端口，liunx, mac系统要用sudo)
