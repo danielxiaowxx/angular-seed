@@ -1,0 +1,56 @@
+<div bindonce="i18nData">
+
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <span bo-text="i18nData.addressBookTip"></span>
+    </div>
+
+    <div class="row margin-large-top">
+        <div class="col-sm-6" bindonce ng-repeat="item in addressList">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4 bo-text="item.contactName"></h4>
+                    <p class="text-muted">(<span bo-text="item.telCode + '-' + item.cityCode + '-' + item.tel"></span>, <span bo-text="item.phone"></span>, <span bo-text="item.email"></span>)</p>
+                    <p>
+                        <span bo-text="item.address"></span> <br/>
+                        <span bo-text="item.cityName"></span>, <span bo-text="item.districtName"></span>, <span bo-text="item.countryName"></span> <br/>
+                        <span bo-text="item.zip"></span>
+                    </p>
+                    <div class="margin-large-top">
+                        <a bo-if="item.isDefault" bo-text="i18nData.defAddr"></a>
+                        <a bo-if="!item.isDefault" ng-click="setDefault(item.addressId)" href="javascript:void(0)" bo-text="i18nData.markAsDef"></a>
+                        <div class="pull-right">
+                            <a ng-click="addingOrEditing(item)" href="javascript:void(0)">
+                                <span class="glyphicon glyphicon-edit text-muted"></span> <span bo-text="i18nData.edit"></span>
+                            </a>
+                            <a ng-click="delete(item.addressId)" href="javascript:void(0)">
+                                <span class="glyphicon glyphicon-trash text-muted"></span> <span bo-text="i18nData.delete"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--增加按钮框-->
+        <div class="col-sm-6">
+            <div class="panel-foo panel-default">
+                <div class="panel-body text-center">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <button class="btn btn-default margin-xs-top" ng-click="addingOrEditing()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span bo-text="i18nData.addAddress"></span>
+                    </button>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

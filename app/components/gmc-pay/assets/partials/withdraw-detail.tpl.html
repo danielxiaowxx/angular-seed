@@ -1,0 +1,98 @@
+<div ng-if="requestIdValid" bindonce="withdrawInfo">
+
+    <!--状态-->
+    <table class="table">
+        <tr class="info">
+            <td>
+                Status:
+                <span bo-if="withdrawInfo.status == processingStatus.successful" class="text-success"><b>Successful</b></span>
+                <span bo-if="withdrawInfo.status == processingStatus.processing" class="text-warning"><b>Processing</b></span>
+                <span bo-if="withdrawInfo.status == processingStatus.failed" class="text-danger"><b>Failed</b></span>
+
+                <span class="pull-right">
+                    Record Number: <span bo-text="withdrawInfo.recordNumber"></span>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <span class="icon icon-info-big pull-left"></span>
+
+        <div class="pull-left margin-large-left">
+
+            <h3 class="margin-xs-top">
+                <span bo-if="withdrawInfo.status == processingStatus.successful">Your withdrawal is done!</span>
+                <span bo-if="withdrawInfo.status == processingStatus.processing">Your withdrawal request has been accepted!</span>
+                <span bo-if="withdrawInfo.status == processingStatus.failed">Your withdrawal is failed!</span>
+            </h3>
+
+            <p bo-if="withdrawInfo.status == processingStatus.successful" class="text-large">
+                Serial Number of bank: <span bo-text="withdrawInfo.serialNumber"></span>
+            </p>
+
+            <p bo-if="withdrawInfo.status != processingStatus.failed" class="text-muted">
+                The money will be transferred to you in 3-5 working days; it depends on the banks, so please check
+                your account then.
+            </p>
+
+            <p class="text-muted">
+                If you don’t receive the money in 8-10 working days, please feel free to contact us:
+                <a href="mailto:gmcpay@corp.globalmarket.com">gmcpay@corp.globalmarket.com</a>
+            </p>
+
+            <hr class="margin-small-bottom"/>
+
+            <span class="text-muted">
+                <span>Request Created Time: <span bo-text="withdrawInfo.createTime"></span></span>
+                <span class="margin-large-left">Transfer Time: <span bo-text="withdrawInfo.transferTime"></span></span>
+            </span>
+
+            <hr class="margin-small-top"/>
+
+            <dl class="dl-horizontal-large">
+                <dt>Withdrawal Request</dt>
+                <dd><b>US <span bo-text="withdrawInfo.withdrawAmount | currency"></span></b></dd>
+                <dt>Payment Processing Fee</dt>
+                <dd><b>US <span bo-text="withdrawInfo.bankFee | currency"></span></b></dd>
+                <dt>Actual Amount to Account</dt>
+                <dd><h3 class="margin-xs-top">US <span bo-text="withdrawInfo.actualWithdrawAmount | currency"></span></h3></dd>
+            </dl>
+
+            <span class="text-muted">Withdraw to:</span>
+
+            <table class="table table-bordered text-strong">
+                <colgroup>
+                    <col width="30%"/>
+                    <col width="70%"/>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td class="info">Bank Name</td>
+                    <td bo-text="withdrawInfo.cardInfo.bankName"></td>
+                </tr>
+                <tr>
+                    <td class="info">Account Name</td>
+                    <td bo-text="withdrawInfo.cardInfo.cardAccountName"></td>
+                </tr>
+                <tr>
+                    <td class="info">Bank Account Number</td>
+                    <td bo-text="withdrawInfo.cardInfo.cardAccountNO"></td>
+                </tr>
+                <tr>
+                    <td class="info">Bank Address</td>
+                    <td bo-text="withdrawInfo.cardInfo.cardBankAddress"></td>
+                </tr>
+                <tr>
+                    <td class="info">Swift Code</td>
+                    <td bo-text="withdrawInfo.cardInfo.cardSwiftCode"></td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

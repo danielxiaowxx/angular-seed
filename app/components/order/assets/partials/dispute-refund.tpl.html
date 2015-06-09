@@ -1,0 +1,89 @@
+<div bindonce="i18nData">
+
+    <div tabset bindonce="statusStatData">
+        <div tab heading="{{i18nData.allOrders}}" select="switchOrderStatus(null)"></div>
+        <div tab heading="{{i18nData[statusStatData[disputeStatus.awaiting_response].statusName] + ' (' + statusStatData[disputeStatus.awaiting_response].count + ')'}}" select="switchOrderStatus(disputeStatus.awaiting_response)"></div>
+        <div tab heading="{{i18nData[statusStatData[disputeStatus.in_mediation].statusName] + ' (' + statusStatData[disputeStatus.in_mediation].count + ')'}}" select="switchOrderStatus(disputeStatus.in_mediation)"></div>
+        <div tab heading="{{i18nData[statusStatData[disputeStatus.approved].statusName] + ' (' + statusStatData[disputeStatus.approved].count + ')'}}" select="switchOrderStatus(disputeStatus.approved)"></div>
+        <div tab heading="{{i18nData[statusStatData[disputeStatus.canceled].statusName] + ' (' + statusStatData[disputeStatus.canceled].count + ')'}}" select="switchOrderStatus(disputeStatus.canceled)"></div>
+        <div tab heading="{{i18nData[statusStatData[disputeStatus.rejected].statusName] + ' (' + statusStatData[disputeStatus.rejected].count + ')'}}" select="switchOrderStatus(disputeStatus.rejected)"></div>
+    </div>
+
+    <div class="margin-large-top">
+
+        <!--<div class="alert alert-info">-->
+            <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+            <!--To protect your rights, please read the <a href="javascript:void(0)">Notice of Dispute&Refund</a> before apply-->
+        <!--</div>-->
+
+        <!--查询条件-->
+        <form class="form-inline margin-large-top" ng-submit="searchOrderList()">
+            <div class="form-group margin-small-right">
+                <div class="input-group">
+                    <select ng-model="searchType" ng-options="item.value as item.label for item in searchTypes" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group margin-small-right">
+                <input type="text" class="form-control" ng-model="searchKeyword">
+            </div>
+            <button type="submit" class="btn btn-default btn-sm" bo-text="i18nData.search"></button>
+        </form>
+
+        <!--订单列表-->
+        <table class="table margin-large-top">
+            <colgroup>
+                <col width="25%">
+                <col width="35%">
+                <col width="15%">
+                <col width="10%">
+                <col width="15%">
+            </colgroup>
+            <thead>
+            <tr class="info">
+                <td bo-text="i18nData.orderNumber"></td>
+                <td bo-text="i18nData.itemList"></td>
+                <td bo-text="i18nData.openDate"></td>
+                <td bo-text="i18nData.status"></td>
+                <td bo-text="i18nData.operate"></td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr bindonce ng-repeat="orderItem in orderList">
+                <td bo-text="orderItem.orderNO">
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-3" bindonce ng-repeat="productItem in orderItem.products">
+                            <a bo-href="productItem.productUrl" target="_blank">
+                                <img class="full-width" bo-src="productItem.picture || 'http://static.globalmarket.com/portal/image/img-placeholder-160x160.png'">
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td bo-text="orderItem.openTime">
+                </td>
+                <td bo-text="orderItem.statusName">
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-primary" bo-href="'#!/order/dispute-refund/dispute-refund-detail?refundId=' + orderItem.refundId" bo-text="i18nData.viewDetail"></a>
+                </td>
+            </tr>
+
+            <!--没有数据情况-->
+            <tr ng-show="orderList.length == 0">
+                <td colspan="5" class="text-center">
+                    <h2 bo-text="i18nData.noData"></h2>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <!--分页-->
+        <div pagination total-items="pagerOptions.totalItems" ng-model="pagerOptions.pageNum" ng-change="searchOrderList()" previous-text="{{i18nData.previousPage}}" next-text="{{i18nData.nextPage}}" class="pull-right"></div>
+
+    </div>
+
+</div>

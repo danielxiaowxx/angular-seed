@@ -1,0 +1,61 @@
+<div class="container">
+    <ul class="nav-step-bar">
+        <li class="col-sm-4 current-primary">Verify Email Address</li>
+        <li class="col-sm-4 ">Set Payment Password</li>
+        <li class="col-sm-4">Completed</li>
+    </ul>
+
+    <!--发验证邮件前-->
+    <div ng-show="!hasSendVerificationEmail">
+
+        <br/><br/>
+
+        <p class="text-muted">
+            For security, we need to verify your email address for your account, you could feel free to check emails once your balance changed.<br/>
+            Please click the button and then we will send you a verification email.<br/>
+            Check your email and click the link inside to complete the verification and activate your GMCpay account.
+        </p>
+
+        <br/>
+
+        <p>
+            <span class="icon icon-email"></span>
+            <span class="text-muted text-v-center margin-xs-left">Your email address:</span>
+            <b class="margin-small-left margin-small-right text-v-center">{{$root.accountInfo.email}}</b>
+            <!--TODO Daniel: what to do?-->
+            <!--( <a href="javascrpit:void(0)">The address is wrong?</a> )-->
+        </p>
+
+        <br/>
+
+        <button type="button" class="btn btn-warning" ng-click="sendVerificationEmail()">Verify my Email</button>
+    </div>
+
+    <!--发验证邮件后-->
+    <div ng-show="hasSendVerificationEmail">
+
+        <br/>
+
+        <div class="media">
+            <div class="media-left"><span class="icon icon-email-success"></span></div>
+            <div class="media-body">
+                <h3 class="text-success margin-top">Verification Email Sent!</h3>
+            </div>
+        </div>
+
+        <br/>
+
+        <p class="text-muted">
+            Please check your email (<b class="text-default" bindonce="confusionAccountEmail" bo-text="confusionAccountEmail"></b>) inbox now and follow the instruction to complete the
+            verification. If inbox is setting highly security, please check SPAM as well.
+        </p>
+
+        <p>
+            <a bindonce="mailServerUrl" ng-show="mailServerUrl" bo-href="mailServerUrl" target="_blank" class="btn btn-warning btn-sm">Check My Email Inbox</a>
+            <span class="text-muted margin-small-left">This email will be nullity in 10 minutes.</span>
+        </p>
+
+        <p> haven't received the email. <a href="javascript:void(0)" ng-click="sendVerificationEmail()">Send again</a></p>
+    </div>
+
+</div>

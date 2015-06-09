@@ -1,0 +1,377 @@
+//
+// 这是gmc-pay模块特有的样式，所有样式必须在gmc-pay namespace下
+// --------------------------------------------------
+
+.gmc-pay {
+
+  // write style here
+
+  .search-toggle-condition:extend(.btn-group all) {
+    .active {
+      background-color: @brand-primary;
+      color: #FFFFFF;
+      border-radius: 2px !important;
+    }
+    .btn {
+      padding: 4px 12px;
+    }
+  }
+
+  .xlarge-text {
+    font-size: 26px;
+  }
+
+  ul {
+    &.no-left-margin {
+      margin-left: -24px;
+    }
+  }
+
+  // 协议内容
+  .terms-content {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  &.introduction, &.login {
+    margin-top: -15px;
+  }
+
+  .gmc-user {
+    width: 100%;
+
+  }
+
+  .gmc-pay-banner {
+    width: 100%;
+    height: 420px;
+    background: #0E1124 center center url(../images/gmc-pay-banner.jpg) no-repeat;
+  }
+
+  .gmc-pay-banner-active {
+    background-image: url(../images/gmc-pay-banner-save-money.jpg);
+  }
+
+  .gmc-pay-logo {
+    width: 188px;
+    height: 24px;
+    background: url(../images/gmc-pay-logo.png) no-repeat;
+  }
+
+  .gmc-user-login {
+    .gmc-pay-logo{
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      margin-left: -94px;
+    }
+    .form-login {
+      position: relative;
+      top: 130px;
+      text-align: center;
+
+      strong, span {
+        display: block;
+        color: #ffffff;
+      }
+
+      strong {
+        height: 65px;
+        font-size: 28px;
+      }
+
+      span {
+        &.error {
+          color: #FAB907;
+        };
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+      }
+      .form-login-text {
+        &.error {
+          border-color: #FAB907;
+        }
+        width: 436px;
+        height: 55px;
+        line-height: 55px;
+        background: #264468;
+        border: #8398b3 2px solid;
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+        font-weight: 700;
+        font-size: 22px;
+        color: #758ead;
+        .box-shadow(#333333 1px 1px 1px);
+        .transition(background 0.2s linear);
+
+        &:focus {
+          background: darken(#264468, 5%);
+        }
+      }
+    }
+  }
+
+  .content {
+    display: block;
+    margin: 0 auto 0 auto;
+    padding: 40px 0 30px 0;
+    width: 980px;
+
+    p {
+      line-height: 25px;
+      color: #333333;
+      font-size: 16px;
+      strong {
+        .size(100%, 30px);
+        display: block;
+      }
+    }
+
+  }
+
+  .gmc-pay-process-nav {
+    width: 100%;
+    height: 110px;
+    background: #F2F2F2 center center url(../images/gmc-pay-process-nav.jpg) no-repeat;
+  }
+
+  .example-table {
+    width: 100%;
+    border-left: #e6e6e6 1px solid;
+    border-top : #e6e6e6 1px solid;
+
+    thead {
+      background: #f5f5f5;
+      color: #777777;
+      font-size: 16px;
+
+
+      b {
+        color: #333333;
+        font-weight: 700;
+      }
+
+      th {
+        font-weight: 100;
+      }
+
+      tr {
+        height: 60px;
+      }
+    }
+
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+      border-right  : #e6e6e6 1px solid;
+      border-bottom : #e6e6e6 1px solid;
+    }
+
+    tbody {
+      td {
+        padding: 16px 20px;
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+
+    img {
+      display: block;
+      margin: 0 auto 0 auto;
+    }
+
+    .tip {
+      display: block;
+      line-height: 15px;
+      color: #777777;
+      font-size: 12px;
+      font-weight: 100;
+    }
+
+    .yellow {
+      color: #eca100;
+    }
+  }
+
+  .button-large-yellow {
+    .size(435px, 55px);
+    margin: 0 auto 0 auto;
+    display: block;
+    background: #FAB907;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    border: 0;
+    border-radius: 3px;
+    outline: none;
+    .box-shadow(#111111 0 0 1px);
+    .transition(background 0.2s linear);
+
+    &:hover {
+      background: darken(#FAB907, 3%);
+      text-decoration: none;
+    }
+
+    &:active {
+      background: darken(#FAB907, 10%);
+    }
+
+    &.button-large-yellow-active {
+      margin: 40px auto 40px auto;
+      .size(530px, 66px);
+      line-height: 66px;
+      font-size: 30px;
+      .box-shadow(none);
+    }
+  }
+
+  .bank-logo {
+    .inline-block();
+    width: 230px;
+    height: 49px;
+    background:url('../images/blank-sprite.jpg') no-repeat;
+
+    &.CITI {
+      background-position: 0 0;
+    }
+
+    &.WELLSFARGO {
+      background-position: 0 -49px;
+    }
+
+    &.AMERICA {
+      background-position: 0 -98px;
+    }
+
+    &.JPMORGAN {
+      background-position: 0 -147px;
+    }
+    &.GOLDMANSACHS {
+      background-position: 0 -343px;
+    }
+    &.MORGANSTANLEY {
+      background-position: 0 -294px;
+    }
+    &.CAPITALONE {
+      background-position: 0 -245px;
+    }
+    &.CHASE {
+      background-position: 0 -196px;
+    }
+    &.HSBC {
+      background-position: 0 -392px;
+    }
+    &.BARCLAYS {
+      background-position: 0 -441px;
+    }
+    &.HALIFAX {
+      background-position: 0 -490px;
+    }
+    &.STANDARDCHARTERED {
+      background-position: 0 -1471px;
+    }
+    &.NATWEST {
+      background-position: 0 -539px;
+    }
+    &.HANGSENG {
+      background-position: 0 -588px;
+    }
+    &.TSB {
+      background-position: 0 -637px;
+    }
+    &.BRADESCO {
+      background-position: 0 -685px;
+    }
+    &.CAIXA {
+      background-position: 0 -735px;
+    }
+    &.ITAU {
+      background-position: 0 -784px;
+    }
+    &.BANCODOBRASIL {
+      background-position: 0 -833px;
+    }
+    &.MOSCOW {
+      background-position: 0 -882px;
+    }
+    &.ROS {
+      background-position: 0 -931px;
+    }
+    &.SBER {
+      background-position: 0 -980px;
+    }
+    &.VTB {
+      background-position: 0 -1029px;
+    }
+    &.AKGAPC {
+      background-position: 0 -1078px;
+    }
+    &.RIYAD {
+      background-position: 0 -1176px;
+    }
+    &.SABB {
+      background-position: 0 -1225px;
+    }
+
+    &.SAMBA {
+      background-position: 0 -1274px;
+    }
+
+    &.NCB {
+      background-position: 0 -1323px;
+    }
+
+    &.AIRAJHL {
+      background-position: 0 -1373px;
+    }
+
+    &.CHINA {
+      background-position: 0 -1422px;
+    }
+    &.DBS {
+      background-position: 0 -1519px;
+    }
+    &.WINGLUNG {
+      background-position: 0 -1568px;
+    }
+    &.MANDIRI {
+      background-position: 0 -1617px;
+    }
+    &.STATEBANKINDIA {
+      background-position: 0 -1666px;
+    }
+
+    &.HDFC {
+      background-position: 0 -1715px;
+    }
+
+    &.ICICI {
+      background-position: 0 -1764px;
+    }
+
+    &.MAY {
+      background-position: 0 -1813px;
+    }
+
+    &.PUBLIC {
+      background-position: 0 -1862px;
+    }
+
+    &.HONGLONG {
+      background-position: 0 -1912px;
+    }
+
+    &.CIMB {
+      background-position: 0 -1960px;
+    }
+
+    &.RHB {
+      background-position: 0 -2009px;
+    }
+  }
+
+}

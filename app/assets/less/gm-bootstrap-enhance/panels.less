@@ -1,0 +1,21 @@
+//
+// Panels
+// --------------------------------------------------
+
+// 这里提供多两种panel的样式定义，应付一个项目有多种panel样式的问题（如边框实线，边框虚线）
+// 各个项目可根据自己的需要对该样式进行定制
+.panel-foo:extend(.panel all) {
+  border-style: dashed;
+}
+.panel-heading-foo:extend(.panel-heading all) {
+  border-bottom: 1px dashed;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.panel-baz:extend(.panel) {
+
+}
+.panel-heading-baz:extend(.panel-heading all) {
+  margin-left: 8px;
+  margin-right: 8px;
+}

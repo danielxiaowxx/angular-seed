@@ -1,0 +1,254 @@
+<div bindonce="disputeInfo" bindonce="i18nData">
+    <!--订单处理进度-->
+    <ul class="nav-step-bar">
+        <li ng-class="{current: disputeInfo.disputeDetail.disputeStatusHistory.length >= 0}" class="col-sm-4" bo-text="i18nData.buyerRequest"></li>
+        <li ng-class="{current: disputeInfo.disputeDetail.disputeStatusHistory.length >= 1}" class="col-sm-4" bo-text="i18nData.disputeInProgress"></li>
+        <li ng-class="{current: disputeInfo.disputeDetail.disputeStatusHistory.length >= 2}" class="col-sm-4" bo-text="i18nData.disputeResolved"></li>
+    </ul>
+
+    <!--订单信息-->
+    <div class="panel panel-default margin-large-top">
+        <div class="panel-heading-baz">
+            <div class="row">
+                <dl class="col-sm-3">
+                    <dt bo-text="i18nData.orderNO"></dt>
+                    <dd bo-text="disputeInfo.orderDetail.orderNO"></dd>
+                </dl>
+                <dl class="col-sm-3">
+                    <dt bo-text="i18nData.orderTime"></dt>
+                    <dd bo-text="disputeInfo.orderDetail.orderTime"></dd>
+                </dl>
+                <dl class="col-sm-4">
+                    <dt bo-text="i18nData.manufacturer"></dt>
+                    <dd bo-if="disputeInfo.orderDetail.compStoreEnable"><a bo-href="disputeInfo.orderDetail.manuStoreUrl" target="_blank" bo-text="disputeInfo.orderDetail[i18nData.storeNameKey]"></a></dd>
+                    <dd bo-if="!disputeInfo.orderDetail.compStoreEnable"><div bo-text="disputeInfo.orderDetail.manuName"></div></dd>
+                </dl>
+                <dl class="col-sm-2">
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <button class="btn btn-default btn-xs margin-left">
+                            <span talknow-Handler talknow-param-id="{{disputeInfo.orderDetail.manuId}}" talknow-param-id-type="compId"></span>
+                            <span bo-text="i18nData.contactMe"></span>
+                        </button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="panel-body row">
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-2" bo-text="i18nData.itemList">
+                    </div>
+                    <div class="col-sm-2 text-center" bindonce ng-repeat="productItem in disputeInfo.orderDetail.products">
+                        <a bo-href="productItem.productUrl" target="_blank">
+                            <img class="full-width" bo-src="productItem.picture || 'http://static.globalmarket.com/portal/image/img-placeholder-160x160.png'">
+                        </a>
+                        <span class="text-danger"><span bo-text="productItem.unitPrice | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <dl class="dl-horizontal">
+                    <dt bo-text="i18nData.itemTotal"></dt>
+                    <dd><strong><span bo-text="disputeInfo.orderDetail.productTotalPrice | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></strong></dd>
+                    <dt bo-text="i18nData.shippingCost"></dt>
+                    <dd><strong><span bo-text="disputeInfo.orderDetail.shippingCost | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></strong></dd>
+                    <dt bo-text="i18nData.duty"></dt>
+                    <dd><strong><span bo-text="disputeInfo.orderDetail.duty | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></strong></dd>
+                    <dt bo-text="i18nData.subTotal"></dt>
+                    <dd><strong class="text-danger"><span bo-text="disputeInfo.orderDetail.subTotal | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></strong></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!--发起新的退款请求-->
+    <div class="panel panel-default" ng-hide="!dataLoaded" ng-if="disputeInfo.disputeDetail.disputeStatus === undefined || isModifying">
+        <div class="panel-body">
+            <form name="requestForm" class="form-horizontal" novalidate>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span bo-text="i18nData.didYouReceiveGoods"></span> <span class="text-danger text-large"><b>*</b></span></label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                            <input ng-model="disputeInfo.disputeDetail.hasReceiveGoods" type="radio" name="hasReceiveGoods" value="Y"> <span bo-text="i18nData.yes"></span>
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="disputeInfo.disputeDetail.hasReceiveGoods" type="radio" name="disputeInfo.disputeDetail.hasReceiveGoods" value="N"> <span bo-text="i18nData.no"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span bo-text="i18nData.refundReason"></span> <span class="text-danger text-large"><b>*</b></span></label>
+                    <div class="col-sm-9 row">
+                        <div class="col-sm-6">
+                            <div class="form-item-invalid">
+                                <select required
+                                        ng-options="item.id as item.reason for item in disputeInfo.disputeDetail.refundReasons"
+                                        ng-model="disputeInfo.disputeDetail.refundReasonId"
+                                        class="form-control">
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span bo-text="i18nData.refundRequest"></span> <span class="text-danger text-large"><b>*</b></span></label>
+                    <div class="col-sm-9">
+                        <div class="radio">
+                            <label>
+                                <input ng-model="disputeInfo.disputeDetail.isFullRefund" type="radio" name="isFullRefund" ng-value="1"> <span bo-text="i18nData.fullRefund"></span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input ng-model="disputeInfo.disputeDetail.isFullRefund" type="radio" name="isFullRefund" ng-value="2"> <span bo-text="i18nData.partialRefundAmount"></span> {{$root.displayCurrency(disputeInfo.orderDetail.currency)}}
+
+                                <div class="inline margin-xs-left">
+                                    <div ng-class="{'form-item-invalid-right': requestForm.refundAmount.$invalid}">
+                                        <input ng-required="!disputeInfo.disputeDetail.isFullRefund"
+                                               ng-pattern="/^[0-9.]+$/"
+                                               ng-disabled="disputeInfo.disputeDetail.isFullRefund == 1"
+                                               tooltip="${{disputeInfo.disputeDetail.refundAmount | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)}}"  tooltip-trigger="focus"
+                                               ng-model="disputeInfo.disputeDetail.refundAmount" name="refundAmount" type="text" class="form-control input-fixed-sm-width inline">
+                                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> Required; format: <span bo-text="disputeInfo.orderDetail.subTotal"></span></span>
+                                    </div>
+                                </div>
+
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Details <span class="text-danger text-large"><b>*</b></span></label>
+                    <div class="col-sm-9">
+                        <div ng-class="{'form-item-invalid-bottom': requestForm.detail.$invalid && requestForm.detail.$dirty}">
+                            <textarea required maxlength="200" ng-model="disputeInfo.disputeDetail.detail" name="detail" class="form-control" rows="4"></textarea>
+                            <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> <span bo-text="i18nData.required"></span></span>
+                        </div>
+
+                        <span class="pull-right text-muted margin-xs-top">{{200-disputeInfo.disputeDetail.detail.length}} <span bo-text="i18nData.wordsLeft"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span bo-text="i18nData.uploadPhotos"></span> (<span bo-text="i18nData.option"></span>)</label>
+                    <div class="col-sm-9">
+                        <button pl-upload
+                                pl-url="{{uploadConfig.uploadUrl}}"
+                                on-file-uploaded="photoUploaded($response)"
+                                pl-filters-model="uploadConfig.filter"
+                                pl-max-file-size="120kb"
+                                pl-multi-params-model="uploadConfig.multiParams"
+                                class="btn btn-default btn-sm" bo-text="i18nData.selectPhoto"></button>
+                        <p class="text-muted">*<span bo-text="i18nData.photoLimited"></span></p>
+
+                        <div class="row">
+                            <a class="col-sm-3" ng-repeat="photoUrl in disputeInfo.disputeDetail.photos">
+                                <div class="thumbnail">
+                                    <img class="full-width" ng-src="{{photoUrl}}" />
+                                    <button class="close box-remove" ng-click="removePhoto(photoUrl)">
+                                        <span>x</span>
+                                    </button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <button class="btn btn-warning" ng-disabled="requestForm.$invalid" ng-click="submitRefundRequest()" bo-text="i18nData.submit"></button>
+                        <button class="btn btn-default" ng-click="cancelSubmitRequest()" bo-text="i18nData.cancel"></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <!--<div class="alert alert-info">-->
+                            <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+                            <!--Learn more about <a href="javascript:void(0)"><b>Dispute&Refund Policy</b></a>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--退款状态-->
+    <div class="panel panel-default" ng-if="disputeInfo.disputeDetail.disputeStatus !== undefined && !isModifying">
+        <div class="panel-heading-baz">
+            <dl class="dl-horizontal">
+                <dt bo-text="i18nData.disputeStatus"></dt>
+                <dd>
+
+                    <b bo-text="disputeInfo.disputeDetail.disputeStatusName"></b>
+
+                    <small>
+                        <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.awaiting_response">
+                            <span bo-text="i18nData.manuShouldResponseIn"></span>
+                            <strong class="text-danger" timer end-time="disputeInfo.disputeDetail.deadline" class="text-warning">{{days}} <span bo-text="i18nData.days"></span> {{hours}}<span bo-text="i18nData.h"></span> {{minutes}}<span bo-text="i18nData.m"></span> {{seconds}}<span bo-text="i18nData.s"></span></strong><br/>
+                            <span bo-text="i18nData.autoToGMMediation"></span>
+                        </p>
+
+                        <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.in_mediation" bo-text="i18nData.gmCSBeginMediation">
+                        </p>
+
+                        <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.canceled" bo-text="i18nData.disputeCanceledTip">
+                        </p>
+
+                        <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.approved" bo-text="i18nData.refundWillTransfer">
+                        </p>
+
+                        <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.rejected">
+                            <span bo-text="i18nData.disputeClosedIn"></span> <strong class="text-danger" timer end-time="disputeInfo.disputeDetail.deadline" class="text-warning">{{days}} <span bo-text="i18nData.days"></span> {{hours}}<span bo-text="i18nData.h"></span> {{minutes}}<span bo-text="i18nData.m"></span> {{seconds}}<span bo-text="i18nData.s"></span></strong>.<br/>
+                            <span bo-text="i18nData.suggestContactManu"></span><br/>
+                            <span bo-text="i18nData.canRequestDisputeAgain"></span><br/>
+                            <span bo-text="i18nData.canRequestGM"></span>
+                        </p>
+
+                    </small>
+                    <p bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.awaiting_response
+                                || disputeInfo.disputeDetail.disputeStatus == disputeStatus.in_mediation
+                                || disputeInfo.disputeDetail.disputeStatus == disputeStatus.rejected">
+                        <button class="btn btn-warning" ng-click="modifyRequest()" bo-text="i18nData.modifyRequest"></button>
+                        <a class="btn btn-warning" ng-href="#!/order/my-orders/order-detail?orderId={{orderId}}" bo-text="i18nData.viewOrderDetail"></a>
+                        <button class="btn btn-default" ng-click="cancelRefundRequest()" bo-text="i18nData.cancelRequest"></button>
+                        <button bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.rejected" ng-click="requestMediation()" class="btn btn-default" bo-text="i18nData.reqMediation"></button>
+                    </p>
+                    <!--TODO Daniel: url-->
+                    <!--<div class="alert alert-info">-->
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+                        <!--Learn more about <a href="javascript:void(0)"><b>Dispute&Refund Policy</b></a>-->
+                    <!--</div>-->
+                </dd>
+            </dl>
+        </div>
+        <div bo-if="disputeInfo.disputeDetail.disputeStatus != disputeStatus.rejected" class="panel-body">
+            <dl class="dl-horizontal">
+                <dt bo-text="i18nData.createdTime"></dt>
+                <dd bo-text="disputeInfo.disputeDetail.createTime"></dd>
+                <dt bo-text="i18nData.receivedGoods"></dt>
+                <dd bo-text="disputeInfo.disputeDetail.hasReceiveGoods ? i18nData.yes : i18nData.no"></dd>
+                <dt bo-text="i18nData.refundReason"></dt>
+                <dd bo-text="disputeInfo.disputeDetail.refundReason"></dd>
+                <dt bo-text="i18nData.refundRequest"></dt>
+                <dd><span bo-text="disputeInfo.disputeDetail.refundAmount | currency:$root.displayCurrency(disputeInfo.orderDetail.currency)"></span></dd>
+                <dt bo-text="i18nData.details"></dt>
+                <dd bo-text="disputeInfo.disputeDetail.detail"></dd>
+                <dt bo-text="i18nData.photo"></dt>
+                <dd class="row padding-top">
+                    <div class="col-sm-2 text-left" bindonce ng-repeat="photoUrl in disputeInfo.disputeDetail.photos">
+                        <img class="full-width" bo-src="photoUrl">
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div bo-if="disputeInfo.disputeDetail.disputeStatus == disputeStatus.rejected" class="panel-body">
+            <dl class="dl-horizontal">
+                <dt bo-text="i18nData.responseFromManu"></dt>
+                <dd bo-text="i18nData.rejected"></dd>
+                <dt bo-text="i18nData.reason"></dt>
+                <dd bo-text="disputeInfo.disputeDetail.rejectReason"></dd>
+            </dl>
+        </div>
+    </div>
+
+</div>

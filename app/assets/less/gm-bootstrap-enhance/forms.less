@@ -1,0 +1,100 @@
+//
+// Forms
+// --------------------------------------------------
+
+.input-fixed-normal-width {
+  width: @input-fixed-normal-width;
+}
+.input-fixed-large-width {
+  width: @input-fixed-large-width;
+}
+.input-fixed-sm-width {
+  width: @input-fixed-sm-width;
+}
+.input-fixed-xs-width {
+  width: @input-fixed-xs-width;
+}
+
+
+// 表单验证
+form {
+
+  // 默认错误提示信息隐藏
+  .invalid-message-danger, .invalid-message-info, .invalid-message-warning {
+    .hide;
+  }
+
+  .form-item-invalid-bottom, .form-item-invalid-right {
+    position: relative;
+
+    .ng-invalid {
+      position: relative;
+      border-color: @state-danger-text;
+      z-index: 2;
+    }
+
+    .ng-invalid {
+      .ui-select-toggle {
+        .ng-invalid;
+      }
+    }
+
+    .invalid-message-danger, .invalid-message-info, .invalid-message-warning {
+      border: 1px solid;
+      .show;
+      z-index: 1;
+      position: relative;
+    }
+
+    .invalid-message-danger {
+      .bg-danger;
+      border-color: @state-danger-text;
+      color: @state-danger-text;
+    }
+    .invalid-message-info {
+      .bg-info;
+      border-color: @state-info-text;
+      color: @state-info-text;
+    }
+    .invalid-message-warning {
+      .bg-warning;
+      border-color: @state-warning-text;
+      color: @state-warning-text;
+    }
+  }
+
+  // 错误提示在右边
+  .form-item-invalid-right {
+    .inline;
+
+    .ng-invalid {
+      border-right: none;
+    }
+
+    .invalid-message-danger, .invalid-message-info, .invalid-message-warning {
+      display: inline !important;
+      padding: 5px 8px 7px;
+      left:-4px;
+    }
+  }
+
+  // 错误提示在下边
+  .form-item-invalid-bottom {
+
+    .ng-invalid {
+      border-bottom: none;
+    }
+
+    .ng-invalid {
+      .ui-select-toggle {
+        .ng-invalid;
+      }
+    }
+
+    .invalid-message-danger, .invalid-message-info, .invalid-message-warning {
+      padding: 4px 8px;
+      top:-2px;
+    }
+  }
+}
+

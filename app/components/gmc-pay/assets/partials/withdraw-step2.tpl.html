@@ -1,0 +1,129 @@
+<div bindonce="verifyPaymentInfo">
+    <ul class="nav-step-bar">
+        <li class="col-sm-4 cancel">Verify Email Address</li>
+        <li class="col-sm-4 current-primary">Verify Payment Detail</li>
+        <li class="col-sm-4">Completed</li>
+    </ul>
+
+    <div ng-if="verifyEmailLinkPass">
+
+        <form name="paymentForm" class="form-horizontal margin-large-top">
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Available Balance:
+                </label>
+                <div class="col-sm-9">
+                    <label class="control-label"><b class="text-danger text-large">US <span bo-text="verifyPaymentInfo.balance | currency"></span></b></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Withdraw Amount:
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': paymentForm.withdrawAmount.$dirty && (paymentForm.withdrawAmount.$invalid || provideWithdrawInfo.withdrawAmount > verifyPaymentInfo.balance) && !paymentForm.withdrawAmount.$focused}" class="inline">
+                        <span class="text-large" style="vertical-align: middle"><b>US $</b></span>
+                        <input required
+                               ng-pattern="/^[0-9.]+$/"
+                               ng-model="provideWithdrawInfo.withdrawAmount"
+                               valid-focus
+                               name="withdrawAmount"
+                               ng-change="changeActualAmount()"
+                               tooltip="${{provideWithdrawInfo.withdrawAmount | currency:''}}"  tooltip-trigger="focus"
+                               type="text" class="form-control inline input-fixed-normal-width margin-xs-left">
+                        <span class="text-muted">on more than</span> US <span bo-text="verifyPaymentInfo.balance | currency"></span>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> Required and no more than US <span bo-text="verifyPaymentInfo.balance | currency"></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Withdraw to:
+                </label>
+                <div class="col-sm-9">
+                    <label class="panel panel-info bg-info full-width label-normal-weight" bindonce ng-repeat="item in verifyPaymentInfo.cards">
+                        <div class="padding-horizontal padding-vertical inline">
+                            <input type="radio" ng-model="provideWithdrawInfo.cardId" ng-value="item.cardId">
+                        </div>
+
+                        <div class="panel-heading inline">
+                            <h4 class="panel-title"><span bo-text="item.cardBankName"></span> <span class="text-default margin-left" bo-text="item.cardAccountNO"></span></h4>
+                        </div>
+
+                        <div class="panel-body margin-left padding-vertical" ng-show="provideWithdrawInfo.cardId == item.cardId">
+                            <dl class="dl-horizontal margin-left">
+                                <dt>Account Name :</dt>
+                                <dd bo-text="item.cardAccountName"></dd>
+                                <dt>Bank Address :</dt>
+                                <dd bo-text="item.cardBankAddress"></dd>
+                                <dt>Swift Code :</dt>
+                                <dd bo-text="item.cardSwiftCode"></dd>
+                            </dl>
+                        </div>
+                    </label>
+                    <a popover="For security, the bank accounts for withdrawal request are only chosen which you added, or recharged ever."
+                       popover-trigger="mouseenter"
+                       href="javascript:void(0)">Why these cards only?</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Bank Processing Fee:
+                </label>
+                <div class="col-sm-9">
+                    <label class="control-label text-default text-large"><b>US {{bankFee | currency}}</b></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Actual amount to account:
+                </label>
+                <div class="col-sm-9">
+                    <label class="control-label text-default text-large"><b>US {{provideWithdrawInfo.actualWithdrawAmount | currency}}</b></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Payment Password:
+                </label>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-7" ng-class="{'form-item-invalid-bottom': paymentForm.paymentPassword.$dirty && paymentForm.paymentPassword.$invalid}">
+                            <input required ng-model="provideWithdrawInfo.paymentPassword" name="paymentPassword" type="password" class="form-control input-fixed-large-width inline"> <a class="margin-xs-left" href="#!/gmc-pay/forget-password/step1">Forget password?</a>
+                            <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label text-right">
+                    Verification Code:
+                </label>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-7" ng-class="{'form-item-invalid-bottom': paymentForm.verifyCode.$dirty && paymentForm.verifyCode.$invalid}">
+                            <input required ng-model="provideWithdrawInfo.verifyCode" name="verifyCode" type="text" class="form-control input-fixed-sm-width inline"> <img style="height:28px; width: 120px" ng-src="{{verifyCodeImg}}" /> <a class="margin-xs-left" href="javascript:void(0)" ng-click="refreshVerifyCode()">Refresh the code?</a>
+                            <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button ng-click="submit()"
+                            ng-disabled="paymentForm.$invalid || provideWithdrawInfo.withdrawAmount > verifyPaymentInfo.balance || provideWithdrawInfo.actualWithdrawAmount <= 0" class="btn btn-warning">Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

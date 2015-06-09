@@ -1,0 +1,219 @@
+<div ng-if="requestIdValid" bindonce="rechargeInfo">
+    <!--状态-->
+    <table class="table">
+        <tr class="info">
+            <td>
+                Status:
+                <span bo-if="rechargeInfo.status == processingStatus.successful" class="text-success"><b>Successful</b></span>
+                <span bo-if="rechargeInfo.status == processingStatus.processing" class="text-warning"><b>Processing</b></span>
+                <span bo-if="rechargeInfo.status == processingStatus.failed" class="text-danger"><b>Failed</b></span>
+
+                <span class="pull-right">
+                    Record Number: <span bo-text="rechargeInfo.recordNumber"></span>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+
+        <!--成功显示信息-->
+        <div bo-if="rechargeInfo.status == processingStatus.successful">
+            <div class="children-vertical-middle text-success">
+                <span class="icon icon-successful"></span>
+                <h4 class="margin-small-left inline">
+                    Your recharge is successfully!
+                </h4>
+            </div>
+
+            <hr class="margin-small-bottom"/>
+
+            <span class="text-muted">
+                <span>Request Created Time: <span bo-text="rechargeInfo.createTime"></span></span>
+                <span bo-if="rechargeInfo.status == processingStatus.successful" class="margin-large-left">Transfer Time: <span bo-text="rechargeInfo.transferTime"></span></span>
+            </span>
+
+            <hr class="margin-small-top"/>
+
+            <div>
+                <div>
+                    <h3 class="pull-left">Balance Added: <span class="text-danger">US <span bo-text="rechargeInfo.rechargeTotal | currency"></span></span></h3>
+
+                    <div class="pull-right margin-large-bottom">
+                        <span class="icon icon-gmc-logo margin-large-right"></span>
+                        <span class="icon icon-citybank-logo text-v-top"></span>
+                    </div>
+                </div>
+
+                <div class="text-muted clear">Recharged From:</div>
+                <table class="table table-bordered text-strong">
+                    <colgroup>
+                        <col width="30%"/>
+                        <col width="70%"/>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td class="info">Bank Name</td>
+                        <td bo-text="rechargeInfo.cardInfo.cardBankName"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">Account Name</td>
+                        <td bo-text="rechargeInfo.cardInfo.cardAccountName"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">Bank Account Number</td>
+                        <td bo-text="rechargeInfo.cardInfo.cardAccountNO"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">Bank Address</td>
+                        <td bo-text="rechargeInfo.cardInfo.cardBankAddress"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">Swift Code</td>
+                        <td bo-text="rechargeInfo.cardInfo.cardSwiftCode"></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+        <!--处理中或失败显示的信息-->
+        <div bo-if="rechargeInfo.status != processingStatus.successful">
+            <span class="icon icon-info-big pull-left"></span>
+
+            <div class="pull-left margin-large-left">
+
+                <h3 class="margin-xs-top">
+                    <span bo-if="rechargeInfo.status == processingStatus.processing">Your recharge request has been accepted!</span>
+                    <span bo-if="rechargeInfo.status == processingStatus.failed">Your recharge request has been failed.</span>
+                </h3>
+
+                <div bo-if="rechargeInfo.status == processingStatus.processing">
+                    <p class="text-muted">
+                        Please transfer your money to Globalmarket account listed below .
+                    </p>
+
+                    <p class="text-muted">
+                        We will recharge to your GMCpay account in 3-5 working days; it depends on the banks. After we
+                        confirm your transfer, you will receive an notice email.
+                    </p>
+
+                    <p class="text-muted">
+                        If you don’t receive the money in 8-10 working days, please feel free to contact us:
+                        <a href="mailto:gmcpay@corp.globalmarket.com">gmcpay@corp.globalmarket.com</a>
+                    </p>
+                </div>
+
+                <div class="text-muted" bo-if="rechargeInfo.status == processingStatus.failed">
+                    <p>
+                        Failed reason probably:<br/>
+                        1.We didn't recevie your money after 30 days.<br/>
+                        2.You transfered to the wrong account.
+                    </p>
+
+                    <p class="margin-large-top">
+                        If you have any questions, please contact <a href="mailto:gmcpay@corp.globalmarket.com">gmcpay@corp.globalmarket.com</a>
+                    </p>
+                </div>
+
+                <hr class="margin-small-bottom"/>
+
+            <span class="text-muted">
+                <span>Request Created Time: <span bo-text="rechargeInfo.createTime"></span></span>
+            </span>
+
+                <hr class="margin-small-top"/>
+
+                <!--GMC收款信息-->
+                <div bo-if="rechargeInfo.status == processingStatus.processing">
+                    <div>
+                        <h3 class="pull-left">Recharge Total: <span class="text-danger">US <span bo-text="rechargeInfo.rechargeTotal | currency"></span></span></h3>
+
+                        <div class="pull-right margin-large-bottom">
+                            <span class="icon icon-gmc-logo margin-large-right"></span>
+                            <span class="icon icon-citybank-logo text-v-top"></span>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered clear">
+                        <colgroup>
+                            <col width="30%"/>
+                            <col width="30%"/>
+                            <col width="40%"/>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Account Name</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankAccountName"></b><br/>
+                                <span class="text-muted">This Account is opened by Globalmarket. Globalmarket’s  London Stock Exchange Code:GMC</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Bank</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankName"></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Account Number</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankAccountNO"></b><br/>
+                                <span class="text-muted">This Beneficiary Accout Number is only used for this payment. </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Bank Address</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankAddress"></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>SWIFT Code</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankSwiftCode"></b><br/>
+                                <span class="text-muted">If your bank needs 11 digital numbers, please add XXXX behind CITIHKH.  ( e.g., CITIHKHXXXX )</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Bank Phone Nunber</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankPhoneNumber"></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info text-v-center"><b>Beneficiary Bank Email Adress</b></td>
+                            <td colspan="2">
+                                <b class="text-large" bo-text="rechargeInfo.bankEmailAddress"></b>
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td><b>Bank Code</b></td>
+                            <td>
+                                <b class="text-large" bo-text="rechargeInfo.bankCode"></b>
+                            </td>
+                            <td rowspan="2" class="text-muted text-v-center">
+                                <div class="margin-left">
+                                    If you make payment from Hong Kong, please<br/>
+                                    provide the Bank Code and Branch Code.
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td><b>Branch Code</b></td>
+                            <td>
+                                <b class="text-large" bo-text="rechargeInfo.bankBranchCode"></b>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

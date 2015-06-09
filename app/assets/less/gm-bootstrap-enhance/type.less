@@ -1,0 +1,52 @@
+//
+// Typography
+// --------------------------------------------------
+
+.content-body-bg {
+  background-color: @content-body-bg;
+}
+
+
+// Description Lists
+
+.dl-horizontal-large:extend(.dl-horizontal all) {
+  @media (min-width: @grid-float-breakpoint) {
+    dt {
+      width: (@dl-horizontal-offset-large - 20);
+    }
+    dd {
+      margin-left: @dl-horizontal-offset-large;
+
+    }
+  }
+}
+
+.dl-horizontal-small:extend(.dl-horizontal all) {
+  @media (min-width: @grid-float-breakpoint) {
+    dt {
+      width: (@dl-horizontal-offset-small - 20);
+    }
+    dd {
+      margin-left: @dl-horizontal-offset-small;
+    }
+  }
+}
+
+// remove icon
+
+.box-remove {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+}
+
+// text
+
+.text-default {
+  color: @text-color !important;
+}
+
+.label-normal-weight {
+  font-weight: normal;
+}
+

@@ -1,0 +1,132 @@
+<div bindonce="i18nData">
+    <div class="modal-header bg-info">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" bo-text="i18nData.addOrEditAddress"></h4>
+    </div>
+    <div class="modal-body">
+
+        <form name="addressForm" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span bo-text="i18nData.contactName"></span> <span class="text-danger"><b>*</b></span>
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': (addressForm.firstName.$invalid && addressForm.firstName.$dirty) || (addressForm.lastName.$invalid && addressForm.lastName.$dirty)}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input required ng-model="addressInfo.firstName" name="firstName" type="text" class="form-control"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <input required ng-model="addressInfo.lastName" name="lastName" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> <span bo-text="i18nData.required"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span bo-text="i18nData.email"></span> <span class="text-danger"><b>*</b></span>
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': addressForm.email.$invalid && addressForm.email.$dirty}">
+                        <input required ng-model="addressInfo.email" name="email" type="email" class="form-control"/>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> <span bo-text="i18nData.required"></span>; <span bo-text="i18nData.format"></span>:xxxxx@xx.xx</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span bo-text="i18nData.address"></span> <span class="text-danger"><b>*</b></span>
+                </label>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-4 padding-xs-right">
+                            <div ui-select required name="countryCode" on-select="getDistricts($item)" ng-model="addressInfo.countryCode">
+                                <div ui-select-match placeholder="Country"><span class="icon-flag icon-flag-{{$select.selected.countryCode}}"></span> {{$select.selected.countryName}}</div>
+                                <div ui-select-choices repeat="item.countryCode as item in allCountries | filter:$select.search">
+                                    <p>
+                                        <span class="icon-flag icon-flag-{{item.countryCode}} margin-small-right"></span>{{item.countryName}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padding-xs-right padding-xs-left">
+                            <div ui-select required on-select="getCities($item)" ng-model="addressInfo.districtCode">
+                                <div ui-select-match placeholder="District">{{$select.selected.districtName}}</div>
+                                <div ui-select-choices repeat="item.districtCode as item in allDistricts | filter:$select.search">
+                                    {{item.districtName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padding-xs-left">
+                            <div ui-select required ng-model="addressInfo.cityId">
+                                <div ui-select-match placeholder="City">{{$select.selected.cityName}}</div>
+                                <div ui-select-choices repeat="item.id as item in allCities | filter:$select.search">
+                                    {{item.cityName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span bo-text="i18nData.addressLine"></span> <span class="text-danger"><b>*</b></span>
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': addressForm.address.$invalid && addressForm.address.$dirty}">
+                        <input required ng-model="addressInfo.address" name="address" type="text" class="form-control"/>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> <span bo-text="i18nData.required"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" bo-text="i18nData.zipCode">
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': addressForm.zip.$invalid && addressForm.zip.$dirty}">
+                        <input ng-pattern="/^[0-9]+$/" ng-model="addressInfo.zip" name="zip" type="text" class="form-control"/>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> 0-9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span bo-text="i18nData.tel"></span> <span class="text-danger"><b>*</b></span>
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': (addressForm.telCode.$invalid && addressForm.telCode.$dirty) || (addressForm.cityCode.$invalid && addressForm.cityCode.$dirty) || addressForm.tel.$invalid && addressForm.tel.$dirty }">
+                        <div class="row">
+                            <div class="col-sm-3 padding-xs-right">
+                                <input required ng-pattern="/^[0-9]+$/" name="telCode" ng-model="addressInfo.telCode" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-3 padding-xs-left padding-xs-right">
+                                <input required ng-pattern="/^[0-9]+$/" name="cityCode" ng-model="addressInfo.cityCode" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-6 padding-xs-left">
+                                <input required ng-pattern="/^[0-9]+$/" name="tel" ng-model="addressInfo.tel" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> 0-9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" bo-text="i18nData.mobile">
+                </label>
+                <div class="col-sm-9">
+                    <div ng-class="{'form-item-invalid-bottom': addressForm.phone.$invalid && addressForm.phone.$dirty}">
+                        <input ng-pattern="/^[0-9]+$/" ng-model="addressInfo.phone" name="phone" type="text" class="form-control">
+                        <span class="invalid-message-danger"><span class="glyphicon glyphicon-remove-circle"></span> 0-9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-warning" ng-disabled="addressForm.$invalid" ng-click="submit()" bo-text="i18nData.submitAddressBook"></button>
+                <button class="btn btn-default" ng-click="cancel()" bo-text="i18nData.cancel"></button>
+            </div>
+        </form>
+
+    </div>
+</div>

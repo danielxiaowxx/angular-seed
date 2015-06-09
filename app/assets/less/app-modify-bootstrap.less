@@ -1,0 +1,214 @@
+//
+// modify bootstrap
+// 修改或覆盖bootstrap的样式写在这里，不要直接去修改bootstrap的样式源码
+// --------------------------------------------------
+
+// nav
+// --------------------------------------------------
+
+.navbar-inverse {
+
+  .navbar-nav {
+
+    margin-bottom: -1px;
+
+    .navbar-brand {
+      font-size: 16px;
+    }
+
+    > li > a {
+      color: #fff;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    > .active {
+      background-color: #5e6ea4;
+      border-bottom : 2px solid #fff;
+    }
+  }
+}
+
+.nav-tabs {
+  > li {
+    > a {
+      padding:  6px 15px 5px;
+    }
+
+    &.active {
+      > a, > a:hover, > a:focus {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+// type
+// --------------------------------------------------
+
+dl {
+  margin-bottom: 0px;
+}
+
+dl {
+  dt,
+  dd {
+    line-height: 22px;
+  }
+  dt {
+    .text-muted;
+    font-weight: normal;
+    text-align: left !important;
+  }
+  dd {
+    font-size: @font-size-large;
+  }
+}
+
+.text-warning {
+  .text-emphasis-variant(#ffc342);
+}
+
+//
+// Thumbnails
+// --------------------------------------------------
+
+.thumbnail {
+  position: relative;
+}
+
+//
+// Alerts
+// --------------------------------------------------
+
+.alert {
+  padding: 4px 8px;
+  font-size: @font-size-small;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  .close {
+    position: relative;
+    top: -3px;
+  }
+}
+
+// Page header
+// -------------------------
+
+.page-header {
+  padding-bottom: ((@line-height-computed / 2) - 1);
+  margin: 10px 0 10px;
+  border-bottom: 2px solid @page-header-border-color;
+
+  h4, h5, h6 {
+    margin-bottom: 0px;
+  }
+}
+
+//
+// Panels
+// --------------------------------------------------
+
+.panel {
+  &.panel-default {
+    > .panel-heading {
+      background-color: #fff;
+    }
+  }
+
+  &.bg-info {
+    &:extend(.bg-info);
+  }
+}
+
+.panel-heading {
+  padding-left: 6px;
+
+  .panel-title {
+    font-size: @font-size-large;
+  }
+}
+
+.panel-footer {
+  background-color: #fff;
+}
+
+//
+// Table
+// --------------------------------------------------
+
+.table {
+  font-size: @font-size-small;
+  > tbody {
+    > tr > td {
+      border-top: none;
+      border-bottom: 1px solid @table-border-color;
+    }
+  }
+}
+
+//
+// Form
+// --------------------------------------------------
+
+.form-control {
+  border-radius: 0px;
+}
+
+.form-horizontal {
+  .form-group {
+    label.col-sm-3 {
+      padding-right: 4px;
+    }
+    > div.col-sm-9 {
+      padding-left: 4px;
+    }
+  }
+  .control-label {
+    .text-muted;
+    font-weight: normal;
+  }
+}
+
+.radio-inline,
+.checkbox-inline {
+  font-size: @font-size-large;
+}
+
+.ui-select-container {
+  .ui-select-match {
+    .ui-select-toggle {
+      border-radius: 0;
+      font-size: 14px;
+      padding: 4px 8px;
+      .text-left;
+    }
+  }
+}
+
+
+
+//
+// Modals
+// --------------------------------------------------
+
+.modal-dialog {
+  margin: 120px auto;
+
+  .modal-header {
+    padding: 6px 8px;
+  }
+
+  .modal-content {
+    border-radius: 0px;
+  }
+
+  .modal-body {
+    form {
+      padding: 0 20px;
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,100 @@
+<div class="gmc-pay" bindonce="money">
+    <div>
+        <img class="margin-bottom" src="assets/images/gmcpay-logo.png" />
+        <a class="pull-right" href="#!/gmc-pay/introduce" target="_blank">What is GMC Pay?</a>
+    </div>
+
+    <div class="margin-large-top text-muted">Available Balance</div>
+
+    <h2 class="margin-xs-top">US <span bo-text="money.balance | currency"></span>
+        <a href="#!/gmc-pay/recharge" class="btn btn-warning btn-xs margin-left">Recharge</a>
+        <a href="#!/gmc-pay/withdraw" class="btn btn-primary btn-xs">Withdraw</a>
+    </h2>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <dl>
+                <dt>Total Balance</dt>
+                <dd>US <span bo-text="money.balance | currency"></span></dd>
+            </dl>
+        </div>
+        <div class="col-sm-2">
+            <dl>
+                <dt>Recharging</dt>
+                <dd>US <span bo-text="money.recharging | currency"></span></dd>
+            </dl>
+        </div>
+        <div class="col-sm-2">
+            <dl>
+                <dt>Withdrawing</dt>
+                <dd>US <span bo-text="money.withdrawing | currency"></span></dd>
+            </dl>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div>
+        <p>Recent Transaction Record</p>
+
+        <table class="table margin-large-top">
+            <colgroup>
+                <col width="12%">
+                <col width="12%">
+                <col width="12%">
+                <col width="12%">
+                <col width="15%">
+                <col width="15%">
+                <col width="12%">
+            </colgroup>
+            <thead>
+            <tr class="info">
+                <td>Record NO.</td>
+                <td>Date</td>
+                <td>Type</td>
+                <td>Status</td>
+                <td>Income/Expend</td>
+                <td>Balance</td>
+                <td>Details</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr bindonce ng-repeat="recordItem in records">
+                <td bo-text="recordItem.recordNO"></td>
+                <td bo-text="recordItem.date"></td>
+                <td bo-text="recordItem.typeName"></td>
+                <td bo-text="recordItem.statusName"></td>
+                <td>
+                <span bo-class="{'text-success': recordItem.isIncome, 'text-warning': !recordItem.isIncome}">
+                    <span bo-text="recordItem.isIncome ? '+' : '-'"></span>
+                    <span bo-text="recordItem.amount | currency:''"></span>
+                </span>
+                </td>
+                <td bo-text="recordItem.balance | currency:''"></td>
+                <td>
+                    <a bo-if="recordItem.type == transactionTypes.pay" bo-href="'#!/order/my-orders/order-detail?orderId=' + recordItem.orderId"><u>Detail</u></a>
+                    <a bo-if="recordItem.type == transactionTypes.refund" bo-href="'#!/order/dispute-refund/dispute-refund-detail?refundId=' + recordItem.refundId"><u>Detail</u></a>
+                    <a bo-if="recordItem.type == transactionTypes.recharge" bo-href="'#!/gmc-pay/recharge/recharge-detail?requestId=' + recordItem.requestId"><u>Detail</u></a>
+                    <a bo-if="recordItem.type == transactionTypes.withdraw" bo-href="'#!/gmc-pay/withdraw/withdraw-detail?requestId=' + recordItem.requestId"><u>Detail</u></a>
+                </td>
+            </tr>
+
+            <!--没有数据情况-->
+            <tr ng-show="records.length == 0">
+                <td colspan="7" class="text-center">
+                    <h2>No Data</h2>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <a ng-show="records.length > 0" href="#!/gmc-pay/transaction-record" class="pull-right"><u>Check all records</u></a>
+
+    </div>
+
+</div>

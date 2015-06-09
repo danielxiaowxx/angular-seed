@@ -1,0 +1,144 @@
+<div class="gmc-pay" ng-if="requestIdValid" bindonce="rechargeInfo">
+
+    <div>
+        <span class="icon icon-info-big"></span>
+
+        <div class="margin-large-left margin-xs-top text-v-top inline">
+            <h3 class="margin-xs-top margin-xs-bottom">Your Recharge request has been accepted.</h3>
+            <span>Please transfer your money to Globalmarket account listed below. We will contact you after we confirm your transfer.</span>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="content-body-bg clearfix padding-large-horizontal padding-bottom margin-large-bottom">
+        <h3 class="pull-left">Recharge Total: <span class="text-danger">US <span bo-text="rechargeInfo.rechargeTotal | currency"></span></span></h3>
+
+        <!--<div class="pull-right margin-large-bottom">-->
+            <!--<span class="icon icon-gmc-logo margin-large-right"></span>-->
+            <!--<span class="icon icon-citybank-logo text-v-top"></span>-->
+        <!--</div>-->
+    </div>
+
+    <table class="table table-bordered clear">
+        <colgroup>
+            <col width="30%"/>
+            <col width="30%"/>
+            <col width="40%"/>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="info text-v-center"><b>Beneficiary Account Name</b></td>
+            <td colspan="2">
+                <b class="text-large" bo-text="rechargeInfo.bankAccountName"></b><br/>
+                <span class="text-muted">This Account is opened by Globalmarket. Globalmarket’s  London Stock Exchange Code:GMC</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="info text-v-center"><b>Beneficiary Bank</b></td>
+            <td colspan="2">
+                <b class="text-large" bo-text="rechargeInfo.bankName"></b>
+            </td>
+        </tr>
+        <tr>
+            <td class="info text-v-center"><b>Beneficiary Account Number</b></td>
+            <td colspan="2">
+                <b class="text-large" bo-text="rechargeInfo.bankAccountNO"></b><br/>
+                <span class="text-muted">This Beneficiary Accout Number is only used for this payment. </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="info text-v-center"><b>Beneficiary Bank Address</b></td>
+            <td colspan="2">
+                <b class="text-large" bo-text="rechargeInfo.bankAddress"></b>
+            </td>
+        </tr>
+        <tr>
+            <td class="info text-v-center"><b>SWIFT Code</b></td>
+            <td colspan="2">
+                <b class="text-large" bo-text="rechargeInfo.bankSwiftCode"></b><br/>
+                <span class="text-muted">If your bank needs 11 digital numbers, please add XXXX behind CITIHKH.  ( e.g., CITIHKHXXXX )</span>
+            </td>
+        </tr>
+        <tr class="warning">
+            <td><b>Bank Code</b></td>
+            <td>
+                <b class="text-large" bo-text="rechargeInfo.bankCode"></b>
+            </td>
+            <td rowspan="2" class="text-muted text-v-center">
+                <div class="margin-left">
+                    If you make payment from Hong Kong, please<br/>
+                    provide the Bank Code and Branch Code.
+                </div>
+            </td>
+        </tr>
+        <tr class="warning">
+            <td><b>Branch Code</b></td>
+            <td>
+                <b class="text-large" bo-text="rechargeInfo.bankBranchCode"></b>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="text-muted no-left-margin">
+        <li>Beneficiary Bank Address: <span bo-text="rechargeInfo.bankPhoneNumber"></span> ,  Beneficiary Bank Email Adress: <span bo-text="rechargeInfo.bankEmailAddress"></span></li>
+        <li>Please only transfer payment to the Beneficiary Name listed above. DO NOT transfer payment directly to the manufacturer.</li>
+        <li>Transfer the full amount in one payment. Do not divide a payment into several payments.</li>
+        <li>Keep your bank remittance slip for future reference.</li>
+        <li>When using bank transfer, please be noted that the money has covered the service fees.</li>
+        <li>Please contact us(Globalmarket Buyer Service Team) if the order status is still "not paid" 7 working days after you are confirmed the successful payment.</li>
+    </ul>
+
+    <div class="text-center non-print">
+        <button class="btn btn-primary margin-large-right" ng-click="printPage()">Print This Page</button>
+        <button class="btn btn-primary" ng-click="scrollToTransferOnline()">Transfer Online</button>
+    </div>
+
+    <hr/>
+
+    <br/>
+
+    <!--transfer online banks-->
+
+    <div class="non-print">
+        <h3 name="transferOnline" id="transferOnline">Transfer Online</h3>
+
+        <br/>
+
+        <p>
+        <div ui-select class="input-fixed-large-width inline" on-select="showBanks($item)" ng-model="selectCountryName">
+            <div ui-select-match><span class="icon-flag icon-flag-{{$select.selected.countryCode}}"></span> {{$select.selected.countryName}}</div>
+            <div ui-select-choices repeat="item.countryName as item in bankCountries | filter:$select.search">
+                <p>
+                    <span class="icon-flag icon-flag-{{item.countryCode}} margin-small-right"></span>{{item.countryName}}
+                </p>
+            </div>
+        </div>
+
+        <div class="inline margin-large-left">
+            <label class="radio-inline">
+                <input name="accountType" ng-model="isBusinessAccount" ng-value="true" type="radio"> Business Account
+            </label>
+            <label class="radio-inline">
+                <input name="accountType" ng-model="isBusinessAccount" ng-value="false" type="radio"> Personal Account
+            </label>
+        </div>
+        </p>
+
+        <br/>
+
+        <p>
+            <small class="text-muted">Click the logo to the online bank website.</small>
+        </p>
+
+        <div class="row padding-left">
+            <a ng-repeat="bankItem in banks" class="col-sm-3 bank-logo {{bankItem.bankName}}" ng-href="{{isBusinessAccount ? bankItem.businessUrl : bankItem.personalUrl}}" target="_blank"></a>
+        </div>
+
+        <br/><br/>
+
+        <!--<img class="full-width" src="assets/images/order-process.png">-->
+    </div>
+
+</div>

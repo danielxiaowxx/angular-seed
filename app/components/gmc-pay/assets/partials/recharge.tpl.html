@@ -1,0 +1,21 @@
+<div>
+
+    <h3 class="page-header">
+        <span class="icon icon-bank"></span> Bank Transfer
+    </h3>
+
+    <br/><br/>
+
+    <p>
+        <form name="rechargeForm" class="form-inline">
+            <div class="form-group">
+                <span>Recharge Amount:</span>
+            </div>
+            <div class="form-group">
+                <b class="margin-xs-right margin-small-left">US $</b><input required ng-pattern="/^[0-9.]+$/" ng-model="rechargeAmount" tooltip="${{rechargeAmount | currency:''}}"  tooltip-trigger="focus" type="text" class="form-control input-sm input-fixed-normal-width">
+            </div>
+            <button ng-click="submit()" ng-disabled="rechargeForm.$invalid || rechargeAmount === 0" type="submit" class="btn btn-sm btn-warning margin-left">Submit</button>
+        </form>
+    </p>
+
+</div>

@@ -1,0 +1,108 @@
+//
+// Navs
+// --------------------------------------------------
+
+ul.nav-step-bar {
+  padding: 0px;
+  height: @nav-step-bar-height;
+  margin: @nav-step-bar-margin;
+  overflow: hidden;
+
+  li {
+    .pull-left;
+    display: inline;
+    position: relative;
+    background: @nav-step-bar-default-bg;
+    text-align: center;
+    line-height: @nav-step-bar-height;
+    color: @nav-step-bar-default-color;
+
+    &:after, &:before {
+      position: absolute;
+      content: " ";
+      display: inline-block;
+      border-style: solid;
+      top: -50%;
+      z-index: 2
+    }
+
+    &::before {
+      border-color: transparent transparent transparent #fff;
+      border-width: @nav-step-bar-height 0 @nav-step-bar-height 20px;
+      right: -10px;
+    }
+
+    &::after {
+      border-color: transparent transparent transparent #d3d9e6;
+      border-width: @nav-step-bar-height 0 @nav-step-bar-height 20px;
+      right: -5px
+    }
+
+    &:last-child::before, &:last-child::after {
+      display: none;
+    }
+
+    &.current {
+      background: @nav-step-bar-current-bg;
+      color: @nav-step-bar-current-color;
+
+      &::after {
+        border-left-color: @nav-step-bar-current-bg;
+      }
+    }
+
+    &.current-primary:extend(&.current all) {
+      background: @nav-step-bar-current--primary-bg;
+      color: @nav-step-bar-current-color;
+
+      &::after {
+        border-left-color: @nav-step-bar-current--primary-bg;
+      }
+    }
+
+    &.cancel {
+      background: @nav-step-bar-current-cancel-bg;
+
+      &::after {
+        border-left-color: @nav-step-bar-current-cancel-bg;
+      }
+    }
+
+  }
+}
+
+// TODO Daniel 样式还未通用
+ul.nav-step-info-bar {
+  height: 16px;
+  padding: 0px;
+  text-align: center;
+  margin: 0;
+  list-style: none;
+  li {
+    .pull-left;
+    padding: 5px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    &.current {
+      &:after, &:before {
+        content: " ";
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+      }
+      &:before {
+        border-style: solid;
+        border-width: 0 6px 6px;
+        border-color: transparent transparent #d3d9e6;
+        bottom: -1px
+      }
+      &:after {
+        border-style: solid;
+        border-width: 0 6px 6px;
+        border-color: transparent transparent #fff;
+        bottom: -2px
+      }
+    }
+  }
+}

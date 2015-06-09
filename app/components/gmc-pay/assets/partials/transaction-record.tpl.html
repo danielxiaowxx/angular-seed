@@ -1,0 +1,94 @@
+<div class="gmc-pay">
+
+    <div class="padding-horizontal padding-vertical bg-info">
+        <dl class="dl-horizontal-small">
+            <dt>Type :</dt>
+            <dd>
+                <div class="search-toggle-condition">
+                    <label class="btn" ng-model="searchCondition.type" btn-radio="-1" uncheckable>All</label>
+                    <label class="btn" ng-model="searchCondition.type" btn-radio="transactionTypes.pay" uncheckable>Pay</label>
+                    <label class="btn" ng-model="searchCondition.type" btn-radio="transactionTypes.recharge" uncheckable>Recharge</label>
+                    <label class="btn" ng-model="searchCondition.type" btn-radio="transactionTypes.withdraw" uncheckable>Withdraw</label>
+                    <label class="btn" ng-model="searchCondition.type" btn-radio="transactionTypes.refund" uncheckable>Refund</label>
+                </div>
+            </dd>
+
+            <!--增加中间的间隔-->
+            <div class="margin-top"></div>
+
+            <dt>Fund Flow :</dt>
+            <dd>
+                <div class="search-toggle-condition">
+                    <label class="btn" ng-model="searchCondition.fundFlow" btn-radio="-1" uncheckable>Both</label>
+                    <label class="btn" ng-model="searchCondition.fundFlow" btn-radio="1" uncheckable>Income</label>
+                    <label class="btn" ng-model="searchCondition.fundFlow" btn-radio="2" uncheckable>Expend</label>
+                </div>
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <p class="pull-right margin-large-top" bindonce="moneyStat">
+            Income Total: <b class="margin-right">US <span bo-text="moneyStat.incomeTotal | currency"></span></b>Expend Total: <b>US <span bo-text="moneyStat.expendTotal | currency"></span></b>
+        </p>
+    </div>
+
+    <table class="table margin-large-top">
+        <colgroup>
+            <col width="12%">
+            <col width="12%">
+            <col width="12%">
+            <col width="12%">
+            <col width="15%">
+            <col width="15%">
+            <col width="12%">
+        </colgroup>
+        <thead>
+        <tr class="info">
+            <td>Record NO.</td>
+            <td>Date</td>
+            <td>Type</td>
+            <td>Status</td>
+            <td>Income/Expend</td>
+            <td>Balance</td>
+            <td>Details</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr bindonce ng-repeat="recordItem in records">
+            <td bo-text="recordItem.recordNO"></td>
+            <td bo-text="recordItem.date"></td>
+            <td bo-text="recordItem.typeName"></td>
+            <td bo-text="recordItem.statusName"></td>
+            <td>
+                <span bo-class="{'text-success': recordItem.isIncome, 'text-warning': !recordItem.isIncome}">
+                    <span bo-text="recordItem.isIncome ? '+' : '-'"></span>
+                    <span bo-text="recordItem.amount | currency:''"></span>
+                </span>
+            </td>
+            <td bo-text="recordItem.balance | currency:''"></td>
+            <td>
+                <a bo-if="recordItem.type == transactionTypes.pay" bo-href="'#!/order/my-orders/order-detail?orderId=' + recordItem.orderId"><u>Detail</u></a>
+                <a bo-if="recordItem.type == transactionTypes.refund" bo-href="'#!/order/dispute-refund/dispute-refund-detail?refundId=' + recordItem.refundId"><u>Detail</u></a>
+                <a bo-if="recordItem.type == transactionTypes.recharge" bo-href="'#!/gmc-pay/recharge/recharge-detail?requestId=' + recordItem.requestId"><u>Detail</u></a>
+                <a bo-if="recordItem.type == transactionTypes.withdraw" bo-href="'#!/gmc-pay/withdraw/withdraw-detail?requestId=' + recordItem.requestId"><u>Detail</u></a>
+            </td>
+        </tr>
+
+        <!--没有数据情况-->
+        <tr ng-show="records.length == 0">
+            <td colspan="7" class="text-center">
+                <h2>No Data</h2>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <!--分页-->
+    <div pagination total-items="pagerOptions.totalItems" items-per-page="pagerOptions.pageSize" ng-model="pagerOptions.pageNum" ng-change="searchRecordList()" class="pull-right"></div>
+
+
+</div>
