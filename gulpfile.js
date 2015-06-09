@@ -315,36 +315,6 @@ gulp.task('server', function() {
             var url = require('url');
             var proxy = require('proxy-middleware');
             return [
-                (function() {
-                    var options = url.parse('http://localhost:8080'); // 后台API的服务地址
-                    options.route = '/buyerRestService'; // 该context转到以上后台URL
-                    return proxy(options);
-                })(),
-                (function() {
-                    var options = url.parse('http://localhost:8080'); // 后台API的服务地址
-                    options.route = '/commonRestService'; // 该context转到以上后台URL
-                    return proxy(options);
-                })(),
-                (function() {
-                    var options = url.parse('http://localhost:8080/user'); // 后台API的服务地址
-                    options.route = '/user'; // 该context转到以上后台URL
-                    return proxy(options);
-                })(),
-                (function() {
-                    var options = url.parse('http://static.globalmarket.com/sns/plugins'); // 后台API的服务地址
-                    options.route = '/ft/plugins'; // 该context转到以上后台URL
-                    return proxy(options);
-                })(),
-                (function() {
-                    var options = url.parse('http://192.168.86.125:8080/gmdms2'); // 后台API的服务地址
-                    options.route = '/gmdms2'; // 该context转到以上后台URL
-                    return proxy(options);
-                })(),
-                (function() {
-                    var options = url.parse('http://sit.like.globalmarket.com/like'); // 后台API的服务地址
-                    options.route = '/like'; // 该context转到以上后台URL
-                    return proxy(options);
-                })()
             ];
         }
     });
@@ -360,7 +330,7 @@ gulp.task('deploy', ['pre-dev', 'gen-js-lib'], function() {
         _.each(files, function(file) {
             var md5Code = md5(fs.readFileSync(file));
             md5Retult[file.replace(paths.dist, '')] = 'version' + md5Code.substr(0, 6);
-        })
+        });
 
         // 替换index.html的内容
         var stream = gulp.src(paths.srcRoot + '/index.html').pipe(processhtml());
