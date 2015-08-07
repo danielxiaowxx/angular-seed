@@ -23,7 +23,7 @@ var _ = require('underscore');
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
-var md5 = require('MD5');
+var md5 = require('md5');
 
 var paths = {
   less       : ['./app/assets/less/**/*.less', './app/components/gmc-pay/assets/less/*.less'],
@@ -313,7 +313,7 @@ gulp.task('server', function() {
   connect.server({
     root      : 'app/dist/',
     //https: true,
-    port      : 80,
+    port      : 8080,
     livereload: true,
     middleware: function(connect, o) {
       var url = require('url');
@@ -332,13 +332,13 @@ gulp.task('deploy', ['pre-dev', 'gen-js-lib'], function() {
     // 为js和css文件生成md5
     _.each(files, function(file) {
       var md5Code = md5(fs.readFileSync(file));
-      md5Retult[file.replace(paths.dist, '')] = 'version' + md5Code.substr(0, 6);
+      md5Retult[file.replace(paths.dist + '/', '')] = 'version' + md5Code.substr(0, 6);
     });
 
     // 替换index.html的内容
     var stream = gulp.src(paths.srcRoot + '/index.html').pipe(processhtml());
     _.each(md5Retult, function(version, url) {
-      stream = stream.pipe(replace(url, '/' + version + url));
+      stream = stream.pipe(replace(url, '/' + version + '/' + url));
     });
     stream.pipe(gulp.dest(paths.dist));
   });
