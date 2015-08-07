@@ -4,28 +4,28 @@
 
 (function() {
 
-    angular.module('demo.controller').controller('MyDemoCtrl', ['$scope',
+  angular.module('demo.controller').controller('MyDemoCtrl', ['$scope',
 
-        function MyDemoCtrl($scope) {
+    function MyDemoCtrl($scope) {
 
-            /*========== Scope Models ==================================================*/
+      /*========== Scope Models ==================================================*/
 
-            /*========== Scope Functions ==================================================*/
+      /*========== Scope Functions ==================================================*/
 
-            /*========== Listeners ==================================================*/
+      /*========== Listeners ==================================================*/
 
-            $scope.$on('$routeChangeSuccess', function() {
-                _init();
-            });
+      $scope.$on('$routeChangeSuccess', function() {
+        _init();
+      });
 
-            /*========== Watches ==================================================*/
+      /*========== Watches ==================================================*/
 
-            /*========== Private Functions ==================================================*/
+      /*========== Private Functions ==================================================*/
 
-            function _init() {
-            }
+      function _init() {
+      }
 
-        }
-    ]);
+    }
+  ]);
 
 })();

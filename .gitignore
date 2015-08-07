@@ -3,3 +3,4 @@ app/lib
 app/dist/*
 app/assets/css/*
 .idea/
+npm-debug.log

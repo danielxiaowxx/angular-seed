@@ -7,53 +7,53 @@
  */
 
 (function() {
-    var controller = angular.module('app.controller', ['app.service']);
+  var controller = angular.module('app.controller', ['app.service']);
 
-    controller.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'APPConst', 'APPGlobalVal', 'errorService', 'loadingService', 'dialogService', 'ipCookie',
-        function AppCtrl($scope, $rootScope, $location, APPConst, APPGlobalVal, errorService, loadingService, dialogService, ipCookie) {
+  controller.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'APPConst', 'APPGlobalVal', 'errorService', 'loadingService', 'dialogService', 'ipCookie',
+    function AppCtrl($scope, $rootScope, $location, APPConst, APPGlobalVal, errorService, loadingService, dialogService, ipCookie) {
 
 
-            /*========== Scope Models ==================================================*/
+      /*========== Scope Models ==================================================*/
 
-            $scope.isLoading = false;
+      $scope.isLoading = false;
 
-            $scope.errorMessage = '';
+      $scope.errorMessage = '';
 
-            /*========== Scope Functions ==================================================*/
+      /*========== Scope Functions ==================================================*/
 
-            /*========== Listeners ==================================================*/
+      /*========== Listeners ==================================================*/
 
-            /*========== Watches ==================================================*/
+      /*========== Watches ==================================================*/
 
-            // 监控加载状态
-            $scope.$watch(function() {
-                return loadingService.isLoading();
-            }, function(newVal) {
-                if ($scope.isLoading !== newVal) {
-                    $scope.isLoading = newVal;
-                }
-            });
-
-            // 监控错误信息状态
-            $scope.$watch(function() {
-               return errorService.errorMessage;
-            }, function(newVal) {
-                if (!newVal) return;
-
-                $scope.errorMessage = newVal;
-            });
-
-            $scope.$on('$routeChangeStart', function() {
-            });
-
-            /*========== Private Functions ==================================================*/
-
-            function _init() {
-            }
-
-            _init();
-
+      // 监控加载状态
+      $scope.$watch(function() {
+        return loadingService.isLoading();
+      }, function(newVal) {
+        if ($scope.isLoading !== newVal) {
+          $scope.isLoading = newVal;
         }
-    ]);
+      });
+
+      // 监控错误信息状态
+      $scope.$watch(function() {
+        return errorService.errorMessage;
+      }, function(newVal) {
+        if (!newVal) return;
+
+        $scope.errorMessage = newVal;
+      });
+
+      $scope.$on('$routeChangeStart', function() {
+      });
+
+      /*========== Private Functions ==================================================*/
+
+      function _init() {
+      }
+
+      _init();
+
+    }
+  ]);
 
 })();
