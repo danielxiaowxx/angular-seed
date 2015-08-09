@@ -17,10 +17,6 @@
    */
   app.constant('APPConst', {
     config: {
-    },
-    // http请求配置
-    httpDefaults: {
-
     }
   });
 

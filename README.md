@@ -4,11 +4,28 @@
 npm install && bower install && gulp pre-dev
 ```
 
-实际应用的项目可参考bvo_front_end: http://gitlab.globalmarket.com/snowball/bvo_front_end
+可参考demo代码，也可参考实际的项目：
+
+bvo_front_end: http://gitlab.globalmarket.com/snowball/bvo_front_end
 
 ## 开始开发
 
 gulp develop (如果用80端口，liunx, mac系统要用sudo)
+
+## Mock数据
+
+1. 打开mock开关
+```
+  var app = angular.module('app', [
+    'ngRoute', 'LocalStorageModule', 'pasvaz.bindonce', 'ipCookie',
+    'app.controller',
+    'common.service',
+    'app.mock', // TODO Daniel: 开发环境才用
+    'demo'
+  ]);
+```
+
+2. 在app/mock/mock.js增加相应的mock数据
 
 
 ## 新增第三方依赖库
@@ -27,7 +44,7 @@ gulp sprites
 
 gulp move-assets
 
-## 项目部署
+## 项目测试/正式环境部署
 
 ```
 npm run deploy
@@ -44,18 +61,19 @@ components为功能模块化，里面的模块可独立出来，运行在任何�
 1. 模块主js文件的名称跟模块名必须一致，如bvo-home.js的模块名为bvo-home
 
 2. 目录结构为
+```
+   -assets
 
-           -assets
+     -less
 
-             -less
+     -images
 
-             -images
+     -partials
 
-             -partials
+   -controllers
 
-           -controllers
-
-           [module name].js
+   [module name].js
+```
 
 ## IE兼容
 
@@ -64,7 +82,9 @@ components为功能模块化，里面的模块可独立出来，运行在任何�
 
 ## 性能提升
 
-只读字段的显示用bindonce
+1. 只读字段的显示用bindonce
+
+2. ngRepert配合track by
 
 ## TODO
 

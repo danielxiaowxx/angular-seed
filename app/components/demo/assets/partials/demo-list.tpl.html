@@ -15,6 +15,9 @@
 
         <thead>
         <tr class="bg-info">
+            <td>
+                <input ng-model="selectFeature.isSelectedAll" ng-change="selectFeature.selectAll()" type="checkbox">
+            </td>
             <td>姓名</td>
             <td>性别</td>
             <td>电话</td>
@@ -25,6 +28,9 @@
 
         <tbody>
         <tr bindonce ng-repeat="item in listData">
+            <td>
+                <input ng-model="item.checked" ng-change="selectFeature.selectItem(item.checked)" type="checkbox">
+            </td>
             <td bo-text="item.name"></td>
             <td bo-text="item.sex"></td>
             <td bo-text="item.phone"></td>
@@ -36,7 +42,7 @@
 
         <!--没有数据的情况-->
         <tr ng-if="listData.length == 0">
-            <td colspan="5">
+            <td colspan="6">
                 <h2 class="text-center">没有数据</h2>
             </td>
         </tr>

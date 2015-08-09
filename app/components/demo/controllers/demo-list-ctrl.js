@@ -61,6 +61,35 @@
               self.listData = data.items;
               self.pagerOptions.totalItems = data.total;
             });
+          },
+
+          // 5. 选择特性（全选/取消选选）
+          selectFeature: {
+            isSelectedAll: false,
+            /**
+             * 全选/取消全选
+             */
+            selectAll: function() {
+              var self = this;
+              _.each($scope.listData, function(item) {
+                item.checked = self.isSelectedAll;
+              });
+            },
+            /**
+             * 选择/取消选择某一项
+             */
+            selectItem: function(checked) {
+              var self = this;
+              if (checked) {
+                // 判断当前所有项是否已选中，如果是，则全选
+                var foundItem = _.find($scope.listData, function(item) { return !item.checked; });
+                if (!foundItem) {
+                  self.isSelectedAll = true; // 全选
+                }
+              } else {
+                self.isSelectedAll = false; // 取消全选
+              }
+            }
           }
         });
       }
