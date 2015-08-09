@@ -1,6 +1,5 @@
 node_modules/
-app/lib
-app/dist/*
-app/assets/css/*
+bower_components/
+dist/
 .idea/
 npm-debug.log

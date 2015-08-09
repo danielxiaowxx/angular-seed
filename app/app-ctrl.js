@@ -7,11 +7,10 @@
  */
 
 (function() {
-  var controller = angular.module('app.controller', ['app.service']);
+  var controller = angular.module('app.controller', ['common.service']);
 
   controller.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'APPConst', 'APPGlobalVal', 'errorService', 'loadingService', 'dialogService', 'ipCookie',
     function AppCtrl($scope, $rootScope, $location, APPConst, APPGlobalVal, errorService, loadingService, dialogService, ipCookie) {
-
 
       /*========== Scope Models ==================================================*/
 

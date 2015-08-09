@@ -6,7 +6,9 @@
 
   var app = angular.module('app', [
     'ngRoute', 'LocalStorageModule', 'pasvaz.bindonce', 'ipCookie',
-    'app.controller', 'app.service',
+    'app.controller',
+    'common.service',
+    'app.mock', // TODO Daniel: 开发环境才用
     'demo'
   ]);
 
@@ -14,8 +16,11 @@
    * 定义全局常量
    */
   app.constant('APPConst', {
-    Config: {
-      backendContext: 'bvo-backend-end' // 后端服务context
+    config: {
+    },
+    // http请求配置
+    httpDefaults: {
+
     }
   });
 

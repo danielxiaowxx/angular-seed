@@ -26,11 +26,11 @@ var glob = require('glob');
 var md5 = require('md5');
 
 var paths = {
-  less       : ['./app/assets/less/**/*.less', './app/components/gmc-pay/assets/less/*.less'],
+  less       : ['./app/assets/less/**/*.less'],
   srcRoot    : './app',
-  dist       : './app/dist',
+  dist       : './dist',
   jsComponent: './app/components',
-  jsLib      : './app/lib'
+  jsLib      : './bower_components'
 };
 var jsLib = {
   commonLibs: [ // 主要依赖库
@@ -74,6 +74,7 @@ var getJSLibList = function(dev) {
     result.commonLibs = _.map(jsLib.commonLibs.concat(jsLib.devLibs), function(item) {
       return paths.jsLib + '/' + item;
     });
+    result.commonLibs = result.commonLibs.concat([paths.srcRoot + '/mock/mock.js']);
     result.ieLibs = _.map(jsLib.ieLibs, function(item) {
       return paths.jsLib + '/' + item;
     });
@@ -93,7 +94,7 @@ var getJSLibList = function(dev) {
   }
 
   return result;
-}
+};
 
 /**
  * 生成angular模块
@@ -276,7 +277,7 @@ gulp.task('clean', function(cb) {
 // 监控js的更改，实时合成需要的js文件
 gulp.task('watch-js', function() {
 
-  gulp.watch([paths.srcRoot + '/!(dist|lib|assets|components)/**/*.@(js|html)', paths.srcRoot + '/*.@(js|html)'], ['gen-js-app']);
+  gulp.watch([paths.srcRoot + '/!(lib|assets|components)/**/*.@(js|html)', paths.srcRoot + '/*.@(js|html)'], ['gen-js-app']);
 
   // 各个模块分别监控
   var rootDir = path.resolve(paths.jsComponent);
@@ -311,7 +312,7 @@ gulp.task('pre-dev', ['less', 'gen-js-lib-dev', 'gen-js-app', 'gen-js-components
 // 开发调试中用到的http服务器
 gulp.task('server', function() {
   connect.server({
-    root      : 'app/dist/',
+    root      : 'dist/',
     //https: true,
     port      : 8080,
     livereload: true,

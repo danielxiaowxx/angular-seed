@@ -9,7 +9,7 @@
 (function() {
 
   // 声明模块控制器
-  angular.module('demo.controller', []);
+  angular.module('demo.controller', ['demo.service']);
 
   // 声明模块
   var module = angular.module('demo', ['demo.controller', 'ui.bootstrap', 'plupload.directive']);
@@ -26,11 +26,11 @@
     function config($routeProvider) {
 
       $routeProvider
-        .when('/demo/my-demo', {
-          templateUrl: 'demo/partials/my-demo.tpl.html',
-          controller : 'MyDemoCtrl'
+        .when('/demo/demo-list', {
+          templateUrl: 'demo/partials/demo-list.tpl.html',
+          controller : 'DemoListCtrl'
         })
-        .when('/demo', {redirectTo: '/demo/my-demo'});
+        .when('/demo', {redirectTo: '/demo/demo-list'});
     }
   ]);
 

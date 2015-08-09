@@ -10,7 +10,11 @@
 
 (function() {
 
-  var serviceModule = angular.module('app.service', []);
+  var serviceModule = angular.module('common.service', []);
+
+  serviceModule.constant('commonServiceConst', {
+    httpDefaults: {}
+  });
 
   /**
    * 拦截http response，统一进行错误处理
@@ -70,7 +74,7 @@
   /**
    * 工具类服务
    */
-  serviceModule.factory('utilService', [function utilService() {
+  serviceModule.factory('utilService', ['$http', 'commonServiceConst', function utilService($http, commonServiceConst) {
     var serviceInstance = {
       /**
        * 安全执行方法，会判断是否在生命周期内
@@ -86,6 +90,20 @@
         } else {
           $scope.$apply(fn);
         }
+      },
+
+      /**
+       * 对service层的访问远程url的重复代码再封装。
+       */
+      httpPost: function (url, param, options) {
+        return $http.post(url, param || {}, _.extend(commonServiceConst.httpDefaults, options));
+      },
+
+      /**
+       * 对service层的访问远程url的重复代码再封装。
+       */
+      httpGet: function (url, param, options) {
+        return $http.get(url, _.extend({params: param}, commonServiceConst.httpDefaults, options));
       }
     };
     return serviceInstance;
@@ -126,7 +144,7 @@
             return type;
           },
           title  : function() {
-            return type == 'alert' ? $rootScope.i18nData.alert : $rootScope.i18nData.confirm;
+            return type == 'alert' ? 'Alert' : 'Confirm';
           },
           message: function() {
             return message;
@@ -147,8 +165,8 @@
       '</div>' +
       '<div class="modal-body">{{message}}</div>' +
       '<div class="modal-footer text-center">' +
-      '    <button class="btn btn-primary" ng-click="ok()" bindonce="$root.i18nData.ok" bo-text="$root.i18nData.ok"></button>' +
-      '    <button ng-hide="isAlert" class="btn btn-warning" ng-click="cancel()" bindonce="$root.i18nData.cancel" bo-text="$root.i18nData.cancel"></button>' +
+      '    <button class="btn btn-primary" ng-click="ok()">OK</button>' +
+      '    <button ng-hide="isAlert" class="btn btn-warning" ng-click="cancel()">Cancel</button>' +
       '</div>'
     );
   }]);
