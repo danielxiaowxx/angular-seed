@@ -1,56 +1,57 @@
 <div>
 
-    <!--查询条件-->
-    <div class="well">
-        <form class="form-inline" ng-submit="search(true)">
-            <div class="form-group margin-small-right">
-                <input type="text" class="form-control" ng-model="searchParams.searchKeyword">
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm">查询</button>
-        </form>
-    </div>
+  <!--查询条件-->
+  <div class="well">
+    <form class="form-inline" ng-submit="search(true)">
+      <div class="form-group margin-small-right">
+        <input type="text" class="form-control" ng-model="searchParams.searchKeyword">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">查询</button>
+    </form>
+  </div>
 
-    <!--列表内容-->
-    <table class="table">
+  <!--列表内容-->
+  <table class="table">
 
-        <thead>
-        <tr class="bg-info">
-            <td>
-                <input ng-model="selectFeature.isSelectedAll" ng-change="selectFeature.selectAll()" type="checkbox">
-            </td>
-            <td>姓名</td>
-            <td>性别</td>
-            <td>电话</td>
-            <td>邮箱</td>
-            <td>操作</td>
-        </tr>
-        </thead>
+    <thead>
+    <tr class="bg-info">
+      <td>
+        <input ng-model="selectFeature.isSelectedAll" ng-change="selectFeature.selectAll()" type="checkbox">
+      </td>
+      <td>姓名</td>
+      <td>性别</td>
+      <td>电话</td>
+      <td>邮箱</td>
+      <td>操作</td>
+    </tr>
+    </thead>
 
-        <tbody>
-        <tr bindonce ng-repeat="item in listData">
-            <td>
-                <input ng-model="item.checked" ng-change="selectFeature.selectItem(item.checked)" type="checkbox">
-            </td>
-            <td bo-text="item.name"></td>
-            <td bo-text="item.sex"></td>
-            <td bo-text="item.phone"></td>
-            <td bo-text="item.email"></td>
-            <td>
-                <button class="btn btn-primary" ng-click="showDetail()">显示详细</button>
-            </td>
-        </tr>
+    <tbody>
+    <tr bindonce ng-repeat="item in listData">
+      <td>
+        <input ng-model="item.checked" ng-change="selectFeature.selectItem(item.checked)" type="checkbox">
+      </td>
+      <td bo-text="item.name"></td>
+      <td bo-text="item.sex"></td>
+      <td bo-text="item.phone"></td>
+      <td bo-text="item.email"></td>
+      <td>
+        <button class="btn btn-primary" ng-click="showDetail()">显示详细</button>
+      </td>
+    </tr>
 
-        <!--没有数据的情况-->
-        <tr ng-if="listData.length == 0">
-            <td colspan="6">
-                <h2 class="text-center">没有数据</h2>
-            </td>
-        </tr>
-        </tbody>
+    <!--没有数据的情况-->
+    <tr ng-if="listData.length == 0">
+      <td colspan="6">
+        <h2 class="text-center">没有数据</h2>
+      </td>
+    </tr>
+    </tbody>
 
-    </table>
+  </table>
 
-    <!--分页-->
-    <div pagination total-items="pagerOptions.totalItems" items-per-page="pagerOptions.pageSize" ng-model="pagerOptions.pageNum" ng-change="search()" class="pull-right"></div>
+  <!--分页-->
+  <div pagination total-items="pagerOptions.totalItems" items-per-page="pagerOptions.pageSize"
+       ng-model="pagerOptions.pageNum" ng-change="search()" class="pull-right"></div>
 
 </div>

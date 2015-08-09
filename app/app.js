@@ -16,8 +16,7 @@
    * 定义全局常量
    */
   app.constant('APPConst', {
-    config: {
-    }
+    config: {}
   });
 
   /**
