@@ -3,7 +3,6 @@
  */
 
 var gulp = require('gulp');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var less = require('gulp-less');
 var minifyCss = require('gulp-minify-css');
@@ -16,7 +15,6 @@ var replace = require('gulp-replace');
 var connect = require('gulp-connect');
 var gulpif = require('gulp-if');
 var sprity = require('sprity');
-var sh = require('shelljs');
 var del = require('del');
 var Promise = require("bluebird");
 var _ = require('underscore');
@@ -33,32 +31,30 @@ var paths = {
   jsLib      : './bower_components'
 };
 var jsLib = {
-  commonLibs: [ // 主要依赖库
-    'jquery/dist/jquery.js',
-    'lodash/lodash.js',
-    'angular/angular.js',
-    'angular-animate/angular-animate.js',
-    'angular-route/angular-route.js',
-    'angular-bootstrap/ui-bootstrap-tpls.js',
-    'angular-bindonce/bindonce.js',
-    'angular-cookie/angular-cookie.js',
-    'angular-timer/dist/angular-timer.js',
-    'angular-md5/angular-md5.js',
-    'angular-mask/dist/ngMask.js',
-    'angular-rt-popup/dist/angular-rt-popup.js',
-    'angular-ui-select/dist/select.js',
-    'plupload-angular-directive/dist/plupload-angular-directive.js',
-    'angular-validation-match/dist/angular-input-match.js',
-    'angular-local-storage/dist/angular-local-storage.js'
-    //'angular-buyer-service/buyer-service.js'
+  commonLibs: [ // 主要依赖库 ['src_path', 'min_path'] （jquery.js和jquery.min.js在同一目录，所以不需要写第二个）
+    ['lodash/lodash.js'],
+    ['angular/angular.js'],
+    ['angular-animate/angular-animate.js'],
+    ['angular-route/angular-route.js'],
+    ['angular-bootstrap/ui-bootstrap-tpls.js'],
+    ['angular-bindonce/bindonce.js'],
+    ['angular-cookie/angular-cookie.js'],
+    ['angular-timer/dist/angular-timer.js'],
+    ['angular-md5/angular-md5.js'],
+    ['angular-mask/dist/ngMask.js'],
+    ['angular-rt-popup/dist/angular-rt-popup.js'],
+    ['angular-ui-select/dist/select.js'],
+    ['plupload-angular-directive/dist/plupload-angular-directive.js'],
+    ['angular-validation-match/dist/angular-input-match.js'],
+    ['angular-local-storage/dist/angular-local-storage.js']
   ],
   ieLibs    : [ // IE兼容库
-    'json3/lib/json3.js',
-    'respond/dest/respond.src.js',
-    'es5-shim/es5-shim.js'
+    ['json3/lib/json3.js'],
+    ['respond/dest/respond.src.js'],
+    ['es5-shim/es5-shim.js']
   ],
   devLibs   : [ // 开发依赖库
-    'angular-mocks/angular-mocks.js'
+    ['angular-mocks/angular-mocks.js']
   ]
 };
 
@@ -72,24 +68,24 @@ var getJSLibList = function(dev) {
 
   if (dev) {
     result.commonLibs = _.map(jsLib.commonLibs.concat(jsLib.devLibs), function(item) {
-      return paths.jsLib + '/' + item;
+      return paths.jsLib + '/' + item[0];
     });
     result.commonLibs = result.commonLibs.concat([paths.srcRoot + '/mock/mock.js']);
     result.ieLibs = _.map(jsLib.ieLibs, function(item) {
-      return paths.jsLib + '/' + item;
+      return paths.jsLib + '/' + item[0];
     });
   } else {
     result.commonLibs = _.map(jsLib.commonLibs, function(item) {
-      return paths.jsLib + '/' + item.replace(/\.js$/, '.min.js');
+      return paths.jsLib + '/' + (item[1] || item[0].replace(/\.js$/, '.min.js'));
     });
     result.ieLibs = _.map(jsLib.ieLibs, function(item) {
-      return paths.jsLib + '/' + item.replace(/(\.src)?\.js$/, '.min.js');
+      return paths.jsLib + '/' + (item[1] || item[0].replace(/(\.src)?\.js$/, '.min.js'));
     });
     result.commonLibsJsMap = _.map(jsLib.commonLibs, function(item) {
-      return paths.jsLib + '/' + item.replace(/(\.src)?\.js$/, '.min.js.map');
+      return paths.jsLib + '/' + (item[1] || item[0].replace(/(\.src)?\.js$/, '.min.js.map'));
     });
     result.ieLibsJsMap = _.map(jsLib.ieLibs, function(item) {
-      return paths.jsLib + '/' + item.replace(/(\.src)?\.js$/, '.min.js.map');
+      return paths.jsLib + '/' + (item[1] || item[0].replace(/(\.src)?\.js$/, '.min.js.map'));
     });
   }
 
@@ -113,7 +109,7 @@ var genComponentJs = function(componentDirName, moduleName) {
           resolve();
         });
     });
-  }
+  };
 
   var genHtmlJsFn = function() {
     return new Promise(function(resolve) {
@@ -134,7 +130,7 @@ var genComponentJs = function(componentDirName, moduleName) {
           resolve();
         });
     });
-  }
+  };
 
   Promise.all([genJsFn(), genHtmlJsFn()])
     .then(function() {

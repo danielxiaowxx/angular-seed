@@ -1,12 +1,12 @@
 ## 开发前的准备
 
 ```
-npm install && bower install && gulp pre-dev
+npm run pre-dev
 ```
 
-可参考demo代码，也可参考实际的项目：
+可参考demo代码，也可参考实际的项目中的public目录：
 
-bvo_front_end: http://gitlab.globalmarket.com/snowball/bvo_front_end
+bvo: http://gitlab.globalmarket.com/snowball/bvo
 
 ## 开始开发
 
