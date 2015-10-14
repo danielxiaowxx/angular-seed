@@ -180,7 +180,7 @@ gulp.task('sprites', function() {
 
 // 将assets资源移到dist目录
 gulp.task('move-assets', function() {
-  gulp.src([paths.srcRoot + '/assets/!(less)/**', paths.jsComponent + '/gmc-pay/assets/!(less|partials)/**'])
+  gulp.src([paths.srcRoot + '/assets/!(less)/**', paths.jsComponent + '/*/assets/!(less|partials)/**'])
     .pipe(gulp.dest(paths.dist + '/assets/'));
   gulp.src([paths.srcRoot + '/assets/less/gm-bootstrap-enhance/*.png'])
     .pipe(gulp.dest(paths.dist + '/assets/images/'));
