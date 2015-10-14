@@ -4,7 +4,7 @@
 
 (function() {
 
-  var serviceModule = angular.module('demo.service', ['common.service']);
+  var serviceModule = angular.module('demo.service');
 
   serviceModule.constant('demoServiceConst', {
     backendContext: '/demoRestService'

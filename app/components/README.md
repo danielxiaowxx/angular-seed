@@ -12,7 +12,13 @@
 
       -partials
 
+      -images
+
+      -less
+
     -controllers
+
+    -services
 
     [module name].js
 

@@ -1,6 +1,3 @@
-/**
- * Created by danielxiao on 15/6/9.
- */
 
 /**
  * Created by danielxiao on 15/1/27.
@@ -9,6 +6,7 @@
 (function() {
 
   // 声明模块控制器
+  angular.module('demo.service', ['common.service']);
   angular.module('demo.controller', ['demo.service']);
 
   // 声明模块
